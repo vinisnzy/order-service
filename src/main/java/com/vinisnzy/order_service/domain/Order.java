@@ -2,9 +2,7 @@ package com.vinisnzy.order_service.domain;
 
 import com.vinisnzy.order_service.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +11,8 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "orders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Order {
     @Id
