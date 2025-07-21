@@ -26,12 +26,18 @@ public class Order {
     private OrderStatus status;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderProduct> products = new ArrayList<>();
+    private List<OrderProduct> items = new ArrayList<>();
 
     public Order(String clientName) {
         this.clientName = clientName;
         this.createdAt = LocalDateTime.now();
         this.subtotal = new BigDecimal(0);
         this.status = OrderStatus.PENDING;
+    }
+
+    public void addItem(OrderProduct item) {
+        items.add(item);
+        item.setOrder(this);
+        this.subtotal = this.subtotal.add(item.getUnitPrice().multiply(new BigDecimal(item.getQuantity())));
     }
 }
