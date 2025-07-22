@@ -6,6 +6,7 @@ import com.vinisnzy.order_service.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +18,13 @@ public class OrderController {
     @Autowired
     private OrderService service;
 
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
+
     @PostMapping
     public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody OrderRequestDTO orderRequest) {
         OrderResponseDTO createdOrder = service.createOrder(orderRequest);
+        kafkaTemplate.send("orders.created", createdOrder.id().toString());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
