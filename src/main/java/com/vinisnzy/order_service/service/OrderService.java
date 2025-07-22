@@ -72,9 +72,13 @@ public class OrderService {
         orderRepository.delete(order);
     }
 
-    private Order findById(Long id) {
+    public Order findById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found with id: " + id));
+    }
+
+    public void save(Order order) {
+        orderRepository.save(order);
     }
 
     private void addProductsToOrder(Order order, List<OrderProductDTO> products) {
