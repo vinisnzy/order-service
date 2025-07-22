@@ -17,7 +17,6 @@ public class PaymentListener {
         Order order = orderService.findById(Long.parseLong(orderId));
         order.setStatus(OrderStatus.PAID);
         orderService.save(order);
-        System.out.println("Payment successful for order ID: " + orderId);
     }
 
     @KafkaListener(topics = "payments.failure", groupId = "order-service-group")
@@ -25,6 +24,5 @@ public class PaymentListener {
         Order order = orderService.findById(Long.parseLong(orderId));
         order.setStatus(OrderStatus.CANCELLED);
         orderService.save(order);
-        System.out.println("Payment failed for order ID: " + orderId);
     }
 }
