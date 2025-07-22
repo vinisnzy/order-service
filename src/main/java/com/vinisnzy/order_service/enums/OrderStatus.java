@@ -2,8 +2,7 @@ package com.vinisnzy.order_service.enums;
 
 public enum OrderStatus {
     PENDING,
-    PROCESSING,
-    COMPLETED,
+    PAID,
     CANCELLED;
 
     public static OrderStatus fromString(String status) {
